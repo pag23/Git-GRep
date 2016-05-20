@@ -36,8 +36,9 @@ set file_last_modified_date = replace(REPLACE([file_name],'PATHWAYS_',''),'.TXT'
 update stage_pathway
 set current_record = 0
 
+--(1109136 row(s) affected)
  
-select Pathway_id,pathway_identifier,MAX(file_last_modified_date) dd  into #X
+select Pathway_id,pathway_identifier,MAX(file_last_modified_date) dd  --into #X
 from stage_pathway
 group by Pathway_id,pathway_identifier
 
@@ -47,7 +48,9 @@ create index temp3 on #X(dd)
 ----------------------------------Set current record -------------------------------
 update stage_pathway
 set current_record = case when x.dd IS not null then 1 else 0 end 
+--SELECT *
 from
+--DROP TABLE
 #X x 
 where x.Pathway_id = stage_pathway.Pathway_id
 and x.pathway_identifier = stage_pathway.pathway_identifier
@@ -58,30 +61,10 @@ and x.dd = stage_pathway.file_last_modified_date
 update dbo.stage_pathway
 set stage_calculated_sequence_number = null
 
- 
---Removed 20120915 PAG
---select Pathway_id pid,Pathway_Identifier pii,rownum, ROW_NUMBER() over(partition by Pathway_id,Pathway_Identifier order by rtt_start,rownum asc) cc 
---into #Y
---from stage_pathway 
---where current_record = 1
-
---create index Y_rownum on #Y(rownum)
-
---update stage_pathway
---set stage_calculated_sequence_number = x.cc
---from
---#Y x 
---where 
---x.rownum = stage_pathway.rownum
---and current_record = 1
-
---drop table #Y
-
---Added 20120915 PAG to update sequence from the pathway_sequence field extracted from IHCS
---select top 1000 * from dbo.stage_pathway
 update dbo.stage_pathway
 set stage_calculated_sequence_number = pathway_sequence
 where stage_calculated_sequence_number is null
+
 
 -----------------add stage_calculated_clock_no -------------------------------
 

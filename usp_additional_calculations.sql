@@ -21,7 +21,10 @@ as
 begin
 if @module = 'PATH'
 begin
+/*------------------------------------
+Edited PAG 20/05/2016
 
+--------------------------------------*/
 update stage_pathway
 set file_last_modified_date = replace(REPLACE([file_name],'PATHWAYS_',''),'.TXT','')
 

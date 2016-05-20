@@ -1,13 +1,12 @@
 USE [nhs_cds]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sd_cds_extract_audit_validate_adhoc_v2]    Script Date: 05/16/2016 09:48:23 ******/
+/****** Object:  StoredProcedure [dbo].[sd_cds_extract_audit_validate_adhoc_v2]    Script Date: 05/11/2016 09:43:18 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
 
 
 
@@ -52,8 +51,8 @@ parameters :
 3RD Parameter is Activity Start date
 4th Parameter is Activity End date
 note: start is the start of the month and end should be the start of the next month.
-example: exec sd_cds_extract_audit_validate_adhoc_v2 'L','130','NET','20151201','20160401'
-example: exec sd_cds_extract_audit_validate_adhoc_v2 'L','020','NET','20160201','20160401'
+example: exec sd_cds_extract_audit_validate_adhoc_v2 'L','130','NET','20130401','20160511'
+example: exec sd_cds_extract_audit_validate_adhoc_v2 'L','020','NET','20130401','20160511'
 --------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------*/
 declare @database_name varchar(100)
@@ -302,7 +301,6 @@ if @type='NET'
         --exec (@query)
  end
     
-
 
 
 
